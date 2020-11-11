@@ -109,7 +109,7 @@
     }
     L.gridLayer.Mqtt({
     }).on("add", function (event) {
-      let mqttClient = mqtt.connect('mqtt://7ead6c63:c59ab3caa7b7d1bb@broker.shiftr.io')
+      let mqttClient = mqtt.connect('mqtts://7ead6c63:c59ab3caa7b7d1bb@broker.shiftr.io')
 
       mqttClient.on('connect', () => {
         mqttClient.subscribe('/m5atom/location', { qos: 0 })
