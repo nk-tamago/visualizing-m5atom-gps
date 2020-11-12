@@ -26,8 +26,7 @@ function mqttInit() {
  async function insertDocument(doc) {
   let client
   try {
-    url = appConfg.mongodb.url
-    client = await mongodb.MongoClient.connect(url, {
+    client = await mongodb.MongoClient.connect(appConfg.mongodb.url, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
