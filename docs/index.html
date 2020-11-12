@@ -73,7 +73,7 @@
       maxNativeZoom: 16
     }).on('tileload', function (event) {
       // タイルロードのタイミングでGeoJsonベクトルタイルを取得してヒートマップを生成
-      let url = "//158.101.74.90:80/api/geojson/{z}/{x}/{y}"
+      let url = "http//158.101.65.204/api/geojson/{z}/{x}/{y}"
       fetch(L.Util.template(url, event.coords))
         .then(res => res.json())
         .then(geojson => {
