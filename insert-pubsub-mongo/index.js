@@ -74,7 +74,7 @@ function main() {
 
 
   mqttClient.on('message', function(topic, message) {
-    console.log(message.toString())
+    //console.log(message.toString())
     let doc = buildMongoDocument(message)
 //    console.log(doc)
 
