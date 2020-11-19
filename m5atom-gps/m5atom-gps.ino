@@ -182,8 +182,8 @@ void loop() {
 
   }
 
-/*
   if(gps.location.isValid()) {
+/*
     Serial.printf("LAT:%.6f\n", gps.location.lat() );
     Serial.printf("LNG:%.6f\n", gps.location.lng() );
     Serial.printf("ALT:%.2f\n", gps.altitude.meters() );
@@ -198,13 +198,6 @@ void loop() {
     sprintf(payload,"{\"lat\":\"%.6f\",\"lon\":\"%.6f\",\"alt\":\"%.2f\",\"gpstime\":\"%s\"}",gps.location.lat(),gps.location.lng(),gps.altitude.meters(),p_datetime);
     Serial.printf("payload:%s\n", payload );
 
-/*   
-    // publish a message roughly every second.
-    if (millis() - lastMillis > 1000) {
-      lastMillis = millis();
-      mqttClient.publish("/hello", "world");
-    }
-*/
 
     char topic[50] = "";
     sprintf(topic,"/%s/%s",config.mqtt.deviceId,config.mqtt.location.topic);
