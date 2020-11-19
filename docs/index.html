@@ -8,14 +8,12 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
-  <!-- Make sure you put this AFTER Leaflet's CSS -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
   <script src="https://unpkg.com/leaflet-hash@0.2.1/leaflet-hash.js"></script>
   <script src="https://assets.shiftr.io/js/mqtt-2.9.0.js"></script>
   <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
   
 </head>
 
@@ -26,7 +24,7 @@
     let map = L.map("mapid", L.extend({
       zoom: 18,
       minZoom: 3,
-      center: [34.78673916270251, 137.318115234375],
+      center: [35.17097, 136.88435],
       worldCopyJump: "true"
     }, L.Hash.parseHash(location.hash)))
     map.zoomControl.setPosition("bottomright")
@@ -42,12 +40,15 @@
       metric: true
     }).addTo(map)
 
-    // マーカーアイコン
-    let humanicon = L.divIcon({
-        html:'<i class="fas fa-male fa-4x"></i>',
-        className:'color_palette solid_icon', 
-        iconSize: [0, 0],
-        iconAnchor:[10, 20]})
+    
+
+    // 現在地アイコン
+    let deviceIcon = L.icon({
+      iconUrl: 'https://3.bp.blogspot.com/-k5XFICQjArU/Vu0kDaE3hPI/AAAAAAAA4-k/S-DwOCwNbtw_J4xfoX6Xdn7JrQ7SPTF9w/s800/ninja2_red.png',
+      iconRetinaUrl: 'https://3.bp.blogspot.com/-k5XFICQjArU/Vu0kDaE3hPI/AAAAAAAA4-k/S-DwOCwNbtw_J4xfoX6Xdn7JrQ7SPTF9w/s800/ninja2_red.png',
+      iconSize: [80, 80],
+      iconAnchor: [40, 40]
+    });
 
 
     // ベース地図の追加
@@ -62,17 +63,17 @@
     let heatLayer = L.layerGroup()
       .addTo(map)
 
-    // GeoJsonのベクトルレイヤの準備
+    // GeoJsonのベクトルレイヤの作成
     L.gridLayer.GeoJson = function (opts) {
       return new L.GridLayer(opts)
     }
-
     L.gridLayer.GeoJson({
       maxZoom: 22,
       minZoom: 10,
       maxNativeZoom: 16
     }).on('tileload', function (event) {
       // タイルロードのタイミングでGeoJsonベクトルタイルを取得してヒートマップを生成
+      // vector-tile-mongoのURL
       let url = "https://tamago.mydns.jp/api/geojson/{z}/{x}/{y}"
       fetch(L.Util.template(url, event.coords))
         .then(res => res.json())
@@ -109,6 +110,7 @@
     }
     L.gridLayer.Mqtt({
     }).on("add", function (event) {
+      // demo用ユーザー
       let mqttClient = mqtt.connect('mqtts://21e02fc9:89e01e205d056a34@broker.shiftr.io')
 
       mqttClient.on('connect', () => {
@@ -124,9 +126,8 @@
         }
 
         let marker = L.marker([parseFloat(payloadJson.lat), parseFloat(payloadJson.lon)],{
-          icon: humanicon
+          icon: deviceIcon
         }).addTo(realtimeLayer)
-//        marker.openPopup()
 
         realtimeLayer.nowMarker = marker
 
@@ -134,14 +135,12 @@
     }).addTo(map)
 
     let baseMaps = {
-//      "国土地理院": gsiLayer,
       "OpenStreetMap": osmLayer
     }
 
     let overlayMaps = {
-//      "History": trackerLayer,
-      "Heat": heatLayer,
-      "Now": realtimeLayer
+      "移動履歴ヒートマップ": heatLayer,
+      "現在地": realtimeLayer
     }
 
     L.control.layers(baseMaps, overlayMaps).addTo(map)
