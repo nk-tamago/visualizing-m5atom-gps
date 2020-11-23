@@ -1,4 +1,5 @@
 # demo-viewer
+AtomicGPSの位置情報を地図上にプロットします
 
 ## Description
  * AtomicGPSの現在位置をリアルタイム表示

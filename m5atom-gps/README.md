@@ -1,5 +1,4 @@
 # m5atom-gps
-
 M5AtomでGPSキットからGNSS位置情報を受信しMQTTブローカーにメッセージを送信します
 
 ## Description

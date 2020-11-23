@@ -1,4 +1,5 @@
 # vector-tile-mongo
+MongoDBに格納されたGeoJSONをベクトルタイルで返却します
 
 ## Description
  * 指定されたタイル座標からベクトルタイルを返却

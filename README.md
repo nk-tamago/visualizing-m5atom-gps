@@ -1,5 +1,4 @@
 # visualizing-m5atom-gps
-
 AtomicGPSをWEB上に可視化するソース一式です
 
 ## Description
