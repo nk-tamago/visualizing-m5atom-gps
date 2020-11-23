@@ -30,3 +30,6 @@ AtomicGPSをWEB上に可視化するソース一式です
   * [demo-geojson-publisher] -> [MQTTBroker] -> [insert-pubsub-mongo] -> [vector-tile-mongo] -> [demo-viewer]
 
 詳細は各ディレクトリを参照してください
+
+## Demo
+[名古屋周辺](https://nk-tamago.github.io/visualizing-m5atom-gps/)
