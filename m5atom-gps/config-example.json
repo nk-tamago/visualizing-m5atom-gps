@@ -4,7 +4,6 @@
     "password": "*****"
   },
   "mqtt": {
-    "clientId": "m5atom",
     "deviceId": "m5atom",
     "server": "*****",
     "port": "1883",

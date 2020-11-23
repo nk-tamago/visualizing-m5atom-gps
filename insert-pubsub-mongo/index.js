@@ -13,17 +13,17 @@ const appConfg = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'))
 
 
 function mqttInit() {
-  let client =  mqtt.connect(appConfg.mqtt.url, {
-      clientId: appConfg.mqtt.deviceId + "-subscriber",
-      username: appConfg.mqtt.user,
-      password: appConfg.mqtt.password,
-      port: appConfg.mqtt.port
-    })
-    return client
+  let client = mqtt.connect(appConfg.mqtt.url, {
+    clientId: appConfg.mqtt.deviceId + "-subscriber",
+    username: appConfg.mqtt.user,
+    password: appConfg.mqtt.password,
+    port: appConfg.mqtt.port
+  })
+  return client
 }
 
 
- async function insertDocument(doc) {
+async function insertDocument(doc) {
   let client
   try {
     client = await mongodb.MongoClient.connect(appConfg.mongodb.url, {
@@ -47,7 +47,7 @@ function mqttInit() {
 
 function buildMongoDocument(payload) {
   let now = new Date()
-  
+
   let payloadJson = JSON.parse(payload)
   let mongoDocument = {
     deviceId: appConfg.mqtt.deviceId,
@@ -63,20 +63,14 @@ function buildMongoDocument(payload) {
 function main() {
   const mqttClient = mqttInit()
 
-  mqttClient.on('connect', function() {
+  mqttClient.on('connect', function () {
     mqttClient.subscribe('/' + appConfg.mqtt.deviceId + '/location', { qos: 0 })
-    /*
-    setInterval(function () {
-      mqttClient.publish('/' + appConfg.mqtt.deviceId + '/location', '{"lat":"34.805230","lon":"137.356320","alt":"0.00"}', { qos: 1 });
-    }, 5000);
-    */
   })
 
 
-  mqttClient.on('message', function(topic, message) {
+  mqttClient.on('message', function (topic, message) {
     //console.log(message.toString())
     let doc = buildMongoDocument(message)
-//    console.log(doc)
 
     insertDocument(doc)
 
