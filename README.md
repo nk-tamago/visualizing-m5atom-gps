@@ -16,7 +16,7 @@ AtomicGPSをWEB上に可視化するソース一式です
 
 ## Usage
 
-事前に以下サービスへの登録、機器投入が必要となります
+事前に以下サービスへの登録、機器購入が必要となります
 * (必須)AtomicGPS
   * M5AtomLiteとGPSのセットです。3000円以下で購入出来ます
 * (任意)[shifter.io](https://shiftr.io/)
