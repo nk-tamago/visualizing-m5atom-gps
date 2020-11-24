@@ -32,4 +32,8 @@ AtomicGPSをWEB上に可視化するソース一式です
 詳細は各ディレクトリを参照してください
 
 ## Demo
-[名古屋周辺](https://nk-tamago.github.io/visualizing-m5atom-gps/)
+[名古屋周辺](https://nk-tamago.github.io/visualizing-m5atom-gps/.)
+
+## Note
+ソースコードを短くするために正常処理しか実装していません
+実際に使用する場合はエラー処理を実装してください
